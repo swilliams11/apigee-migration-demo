@@ -1,0 +1,83 @@
+{% set  NETWORK_NAME = "migration-demo-network" %}
+
+resources:
+- name: edgeaiotemp
+  type: vm-template.jinja
+  properties:
+    zone: us-central1-c
+    network: {{ NETWORK_NAME }}
+    machine-type: n1-standard-8
+    machine-project: centos-cloud
+    machine-family: centos-7
+    tags: ["http-server", "https-server", "edge"]
+- name: express-gatewaytemp
+  type: vm-template.jinja
+  properties:
+    zone: us-central1-c
+    network: {{ NETWORK_NAME }}
+    machine-type: n1-standard-1
+    machine-project: centos-cloud
+    machine-family: centos-7
+    tags: ["http-server", "https-server", "nodegateway"]
+- name: nodejs-backendtemp
+  type: vm-template.jinja
+  properties:
+    zone: us-central1-c
+    network: {{ NETWORK_NAME }}
+    machine-type: n1-standard-1
+    machine-project: centos-cloud
+    machine-family: centos-7
+    tags: ["http-server", "https-server"]
+- name: migration-demo-network
+  type: network-template.jinja
+- name: edgetemp
+  type: firewall-template.jinja
+  properties:
+    network: {{ NETWORK_NAME }}
+    ports: ["8080", "9000", "9001"]
+- name: nodegatewaytemp
+  type: firewall-template.jinja
+  properties:
+    network: {{ NETWORK_NAME }}
+    ports: ["8080", "9001"]
+- name: nodejstemp
+  type: firewall-template.jinja
+  properties:
+    network: {{ NETWORK_NAME }}
+    ports: ["8080"]
+- name: nodejs-grouptemp
+  type: instance-group-template.jinja
+  properties:
+    port-name: http
+    port: 9001
+    network: {{ NETWORK_NAME }}
+    zone: us-central1-c
+- name: edge-grouptemp
+  type: instance-group-template.jinja
+  properties:
+    port-name: http
+    port: 9001
+    network: {{ NETWORK_NAME }}
+    zone: us-central1-c
+- name: edge-healthcheck2
+  type: health-check-template.jinja
+  properties:
+    port-name: http
+    port: 9001
+    protocol: TCP
+- name: nodejs-healthcheck2
+  type: health-check-template.jinja
+  properties:
+    port-name: http
+    port: 9001
+    protocol: TCP
+- name: migration-http-lb
+  type: load-balancer-template.jinja
+  properties:
+    edge-group-name: edge-grouptemp
+    edge-health-check-name: edge-healthcheck2
+    nodejs-group-name: nodejs-grouptemp
+    nodejs-health-check-name: nodejs-healthcheck2
+    ip-protocol: TCP
+    port-range: 8080-8080
+    zone: us-central1-c

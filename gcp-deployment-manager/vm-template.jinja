@@ -1,0 +1,27 @@
+resources:
+- type: compute.v1.instance
+  name: {{ env["name"] }}
+  properties:
+    # The properties of the resource depend on the type of resource. For a list
+    # of properties, see the API reference for the resource.
+    zone: {{ properties["zone"] }}
+    # Replace [MY_PROJECT] with your project ID
+    machineType: https://www.googleapis.com/compute/v1/projects/{{ env["project"] }}/zones/{{ properties["zone"] }}/machineTypes/{{ properties["machine-type"] }}
+    disks:
+    - deviceName: boot
+      type: PERSISTENT
+      boot: true
+      autoDelete: true
+      initializeParams:
+        # Replace [FAMILY_NAME] with the image family name.
+        # See a full list of image families at https://cloud.google.com/compute/docs/images#os-compute-support
+        sourceImage: https://www.googleapis.com/compute/v1/projects/{{ properties["machine-project"] }}/global/images/family/{{ properties["machine-family"] }}
+    # Replace [MY_PROJECT] with your project ID
+    tags:
+      items: {{ properties["tags"] }}
+    networkInterfaces:
+    - network: $(ref.{{ properties["network"] }}.selfLink)
+      # Access Config required to give the instance a public IP address
+      accessConfigs:
+      - name: External NAT
+        type: ONE_TO_ONE_NAT

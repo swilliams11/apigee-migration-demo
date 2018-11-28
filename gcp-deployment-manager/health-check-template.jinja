@@ -1,0 +1,12 @@
+resources:
+  - name: {{ env["name"] }}
+    type: compute.v1.healthCheck
+    properties:
+      checkIntervalSec: 5
+      timeoutSec: 5
+      unhealthyThreshold: 2
+      healthyThreshold: 2
+      type: {{ properties["protocol"] }}
+      tcpHealthCheck:
+        port: {{ properties["port"] }}
+        portName: {{ properties["port-name"] }}

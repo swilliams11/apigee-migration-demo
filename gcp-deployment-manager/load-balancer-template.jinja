@@ -1,0 +1,58 @@
+resources:
+  - name: edge-backend-service2
+    type: compute.v1.backendService
+    properties:
+      port: 9001
+      portName: http
+      protocol: HTTP
+      backends:
+      - name: edge-backend2
+        balancingMode: UTILIZATION
+        capacityScaler: 1.0
+        group: zones/{{ properties["zone"] }}/instanceGroups/{{ properties["edge-group-name"] }}
+      maxUtilization: 0.8
+      connectionDraining:
+        drainingTimeoutSec: 300
+      healthChecks:
+      - $(ref.{{ properties["edge-health-check-name"] }}.selfLink)
+    metadata:
+      dependsOn:
+        - {{ properties["edge-health-check-name"] }}
+        - {{ properties["edge-group-name"] }}
+  - name: nodejs-backend-service2
+    type: compute.v1.backendService
+    properties:
+      port: 9001
+      portName: http
+      protocol: HTTP
+      backends:
+      - name: nodejs-backend2
+        balancingMode: UTILIZATION
+        capacityScaler: 1.0
+        group: zones/{{ properties["zone"] }}/instanceGroups/{{ properties["nodejs-group-name"] }}
+      maxUtilization: 0.8
+      connectionDraining:
+        drainingTimeoutSec: 300
+      healthChecks:
+      - $(ref.{{ properties["nodejs-health-check-name"] }}.selfLink)
+    metadata:
+      dependsOn:
+        - {{ properties["nodejs-health-check-name"] }}
+        - {{ properties["nodejs-group-name"] }}
+  - name: migration-url-map
+    type: compute.v1.urlMap
+    properties:
+      defaultService: $(ref.nodejs-backend-service2.selfLink)
+  - name: migration-http-proxy
+    type: compute.v1.targetHttpProxy
+    properties:
+      urlMap: $(ref.migration-url-map.selfLink)
+  - name: lb-migration-ipaddress
+    type: compute.v1.globalAddress
+  - name: migration-http-forwardingrule
+    type: compute.v1.globalForwardingRule
+    properties:
+      target: $(ref.migration-http-proxy.selfLink)
+      IPAddress: $(ref.lb-migration-ipaddress.address)
+      IPProtocol: {{ properties["ip-protocol"] }}
+      portRange: {{ properties["port-range"] }}

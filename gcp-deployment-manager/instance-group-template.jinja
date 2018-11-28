@@ -1,0 +1,12 @@
+resources:
+  - name: {{ env["name"] }}
+    type: compute.v1.instanceGroup
+    properties:
+      namedPorts:
+      - name: {{ properties["port-name"] }}
+        port: {{ properties["port"] }}
+      network: https://www.googleapis.com/compute/v1/projects/{{ env["project"] }}/global/networks/{{ properties["network"] }}
+      zone: {{ properties["zone"] }}
+    metadata:
+      dependsOn:
+        - {{ properties["network"] }}
