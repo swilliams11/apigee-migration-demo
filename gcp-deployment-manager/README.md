@@ -3,15 +3,20 @@
 This directory contains all the resources necessary to deploy this demo to GCP.
 
 ## Resources
-1. 3 VMs
-  * Apigee Edge AIO
-  * Express gateway
-  * NodeJS backend
+1. create 3 VMs
+   * Apigee Edge AIO
+   * Express gateway
+   * NodeJS backend
 2. HTTP load balancer
+   * NodeJS backend service
+   * Apigee Edge backend service
 3. Two instance groups
-  * NodeJS instance group, which includes the Express Gateway
-  * Edge instance group, which includes Apigee Edge aio.
+   * NodeJS instance group, which includes the Express Gateway
+   * Edge instance group, which includes Apigee Edge aio.
 4. Firewall rules
+5. Health checks
+   * NodeJS gateway health check
+   * Apigee Edge gateway health check
 
 
 ## Adding/removing instances to an unmanaged instance group
