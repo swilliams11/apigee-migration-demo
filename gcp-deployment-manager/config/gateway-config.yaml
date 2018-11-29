@@ -1,0 +1,60 @@
+http:
+  port: 9001
+admin:
+  port: 9876
+  hostname: mygateway
+apiEndpoints:
+  api:
+http:
+  port: 9001
+admin:
+  port: 9876
+  hostname: mygateway
+apiEndpoints:
+  api:
+    host: mygateway
+    paths: '/ip'
+  hello:
+    host: mygateway
+    paths:
+      - '/'
+      - ''
+  hello2:
+    host: demo-prod
+    paths:
+      - '/'
+      - ''
+serviceEndpoints:
+  httpbin:
+    url: 'https://httpbin.org'
+  helloworld:
+    url: 'TARGET_SERVER'
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+pipelines:
+  default:
+    apiEndpoints:
+      - api
+    policies:
+    # Uncomment `key-auth:` when instructed to in the Getting Started guide.
+    # - key-auth:
+      - proxy:
+          - action:
+              serviceEndpoint: httpbin
+              changeOrigin: true
+  pipeline1:
+    apiEndpoints:
+      - hello
+      - hello2
+    policies:
+      - proxy:
+          - action:
+               serviceEndpoint: helloworld
+               changeOrigin: true
