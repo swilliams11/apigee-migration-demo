@@ -21,7 +21,12 @@ resources:
       items: {{ properties["tags"] }}
     networkInterfaces:
     - network: $(ref.{{ properties["network"] }}.selfLink)
+      networkIP: {{ properties["internal-ip"] }}
       # Access Config required to give the instance a public IP address
       accessConfigs:
       - name: External NAT
         type: ONE_TO_ONE_NAT
+    metadata:
+      items:
+        - key: startup-script-url
+          value: {{ properties["startup-script"] }}

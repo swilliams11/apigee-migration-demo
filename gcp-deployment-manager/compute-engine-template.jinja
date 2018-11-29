@@ -10,6 +10,7 @@ resources:
     machine-project: centos-cloud
     machine-family: centos-7
     tags: ["http-server", "https-server", "edge"]
+    internal-ip: 10.0.0.2
 - name: express-gatewaytemp
   type: vm-template.jinja
   properties:
@@ -19,6 +20,8 @@ resources:
     machine-project: centos-cloud
     machine-family: centos-7
     tags: ["http-server", "https-server", "nodegateway"]
+    internal-ip: 10.0.0.3
+    startup-script: https://raw.githubusercontent.com/swilliams11/apigee-migration-demo/master/gcp-deployment-manager/startup-scripts/express-gateway.sh
 - name: nodejs-backendtemp
   type: vm-template.jinja
   properties:
@@ -28,6 +31,8 @@ resources:
     machine-project: centos-cloud
     machine-family: centos-7
     tags: ["http-server", "https-server"]
+    internal-ip: 10.0.0.4
+
 - name: migration-demo-network
   type: network-template.jinja
 - name: edgetemp

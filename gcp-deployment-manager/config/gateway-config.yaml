@@ -28,7 +28,7 @@ serviceEndpoints:
   httpbin:
     url: 'https://httpbin.org'
   helloworld:
-    url: 'TARGET_SERVER'
+    url: 'http://10.0.0.4:8080'
 policies:
   - basic-auth
   - cors
