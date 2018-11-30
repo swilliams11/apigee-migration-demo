@@ -29,6 +29,8 @@ imports:
 - path: instance-group-template.jinja
 - path: health-check-template.jinja
 - path: load-balancer-template.jinja
+- path: startup-scripts/express-gateway.sh
+  name: express-gateway.sh
 
 resources:
 - name: compute-engine-setup

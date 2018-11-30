@@ -21,7 +21,7 @@ resources:
     machine-family: centos-7
     tags: ["http-server", "https-server", "nodegateway"]
     internal-ip: 10.0.0.3
-    startup-script: https://raw.githubusercontent.com/swilliams11/apigee-migration-demo/master/gcp-deployment-manager/startup-scripts/express-gateway.sh
+    startup-script: gs://apigee-migration-demo2/express-gateway.sh
 - name: nodejs-backendtemp
   type: vm-template.jinja
   properties:
@@ -40,6 +40,11 @@ resources:
   properties:
     network: {{ NETWORK_NAME }}
     ports: ["8080", "9000", "9001"]
+- name: allow-ssh
+  type: firewall-template.jinja
+  properties:
+    network: {{ NETWORK_NAME }}
+    ports: ["22"]
 - name: nodegatewaytemp
   type: firewall-template.jinja
   properties:

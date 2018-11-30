@@ -19,9 +19,10 @@ sudo bash install-logging-agent.sh
 #init express-gateway
 cd ~
 eg gateway create -n my-gateway -d my-gateway -t basic
-
-#fetch the config file
-sudo curl https://raw.githubusercontent.com/swilliams11/apigee-migration-demo/master/gcp-deployment-manager/config/gateway-config.yaml -o my-gateway/gateway-config.yaml
+# remove the current config file
+sudo rm -rf ~/my-gateway/config/gateway.config.yaml
+#fetch the config file from github
+sudo curl https://raw.githubusercontent.com/swilliams11/apigee-migration-demo/master/gcp-deployment-manager/config/gateway.config.yaml -o ~/my-gateway/config/gateway.config.yaml
 
 #start express gateway in the background
 cd my-gateway

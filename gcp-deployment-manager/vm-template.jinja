@@ -1,3 +1,5 @@
+{% set startupScript = env["name"] %}
+
 resources:
 - type: compute.v1.instance
   name: {{ env["name"] }}
@@ -26,7 +28,9 @@ resources:
       accessConfigs:
       - name: External NAT
         type: ONE_TO_ONE_NAT
+    {% if startupScript == "express-gatewaytemp" %}
     metadata:
       items:
         - key: startup-script-url
           value: {{ properties["startup-script"] }}
+    {% endif %}
