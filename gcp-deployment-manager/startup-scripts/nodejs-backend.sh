@@ -13,10 +13,11 @@ sudo curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh
 sudo bash install-logging-agent.sh
 
 cd ~
-mkdir helloworld
+mkdir hello-world
 
 #fetch files from github
 sudo curl https://raw.githubusercontent.com/swilliams11/apigee-migration-demo/master/gcp-deployment-manager/backend-services/helloworld/app.js -o ~/hello-world/app.js
+          https://raw.githubusercontent.com/swilliams11/apigee-migration-demo/master/gcp-deployment-manager/backend-services/helloworld/app.js
 sudo curl https://raw.githubusercontent.com/swilliams11/apigee-migration-demo/master/gcp-deployment-manager/backend-services/helloworld/package.json -o ~/hello-world/package.json
 
 cd helloworld
