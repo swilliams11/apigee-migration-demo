@@ -19,7 +19,7 @@ mkdir hello-world
 sudo curl https://raw.githubusercontent.com/swilliams11/apigee-migration-demo/master/gcp-deployment-manager/backend-services/helloworld/app.js -o ~/hello-world/app.js
 sudo curl https://raw.githubusercontent.com/swilliams11/apigee-migration-demo/master/gcp-deployment-manager/backend-services/helloworld/package.json -o ~/hello-world/package.json
 
-cd helloworld
+cd hello-world
 npm install
 
 #start service
