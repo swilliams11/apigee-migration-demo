@@ -5,13 +5,6 @@ admin:
   hostname: mygateway
 apiEndpoints:
   api:
-http:
-  port: 9001
-admin:
-  port: 9876
-  hostname: mygateway
-apiEndpoints:
-  api:
     host: mygateway
     paths: '/ip'
   hello:
