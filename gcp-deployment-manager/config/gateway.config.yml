@@ -2,13 +2,10 @@ http:
   port: 9001
 admin:
   port: 9876
-  hostname: mygateway
 apiEndpoints:
   api:
-    host: mygateway
     paths: '/ip'
   hello:
-    host: mygateway
     paths:
       - '/'
       - ''
