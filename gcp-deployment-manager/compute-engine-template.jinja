@@ -1,5 +1,5 @@
 {% set  NETWORK_NAME = "migration-demo-network" %}
-{% set  BUCKET_NAME = "apigee-migration-demo" %}
+{% set  BUCKET_NAME = "apigee-migration-demo5" %}
 
 resources:
 - name: edgeaiotemp
@@ -33,7 +33,7 @@ resources:
     machine-family: centos-7
     tags: ["http-server", "https-server"]
     internal-ip: 10.0.0.4
-
+    startup-script: gs://{{ BUCKET_NAME }}/nodejs-backend.sh
 - name: migration-demo-network
   type: network-template.jinja
 - name: edgetemp
