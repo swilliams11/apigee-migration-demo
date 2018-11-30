@@ -1,4 +1,5 @@
 {% set  NETWORK_NAME = "migration-demo-network" %}
+{% set  BUCKET_NAME = "apigee-migration-demo" %}
 
 resources:
 - name: edgeaiotemp
@@ -21,7 +22,7 @@ resources:
     machine-family: centos-7
     tags: ["http-server", "https-server", "nodegateway"]
     internal-ip: 10.0.0.3
-    startup-script: gs://apigee-migration-demo2/express-gateway.sh
+    startup-script: gs://{{ BUCKET_NAME }}/express-gateway.sh
 - name: nodejs-backendtemp
   type: vm-template.jinja
   properties:
